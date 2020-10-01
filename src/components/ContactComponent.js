@@ -185,8 +185,7 @@ class Contact extends Component {
                                     </div>
                                 </Col>
                                 <Col md={4}>
-                                    <Control.select model=".contactType" name="contactType"
-                                        className="form-control">
+                                    <Control.select model=".contactType" name="contactType" className="form-control">
                                         <option>By Phone</option>
                                         <option>By Email</option>
                                     </Control.select>
@@ -203,9 +202,7 @@ class Contact extends Component {
                             </Row>
                             <Row className="form-group">
                                 <Col md={{size: 10, offset: 2}}>
-                                    <Button type="submit" color="primary">
-                                        Send Feedback
-                                    </Button>
+                                    <Button type="submit" color="primary" onClick={this.handleSubmit}>Send Feedback</Button>
                                 </Col>
                             </Row>
                         </LocalForm>
