@@ -1,12 +1,15 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../shared/baseUrl';
+import { Loading } from './LoadingComponent';
+import { Fade, Stagger } from 'react-animation-components';
 
 function RenderPartner({partner}) {
     if (partner) {
         return (
             <React.Fragment>
-                <Media object src={partner.image} alt={partner.name} width="150" />
+                <Media object src={baseUrl + partner.image} alt={partner.name} width="150" />
                 <Media body className="ml-5 mb-4">
                     <Media heading>{partner.description}</Media>
                 </Media>
@@ -16,16 +19,23 @@ function RenderPartner({partner}) {
     return (<div></div>)
 }
 
-function About(props) {
-
+function PartnerList(props) {
     const partners = props.partners.map(partner => {
         return (
-            <Media key={partner.id} tag="li">
-                <RenderPartner partner={partner} />
-            </Media>
+            <Fade key={partner.id} in>
+                <Media tag="li">
+                    <RenderPartner partner={partner} />
+                </Media>
+            </Fade>
         );
     });
 
+    if (props.isLoading) return <Loading />
+    if (props.errMess) return <h4>{props.errMess}</h4>
+    return (<Stagger in>{partners}</Stagger>)
+}
+
+function About(props) {
     return (
         <div className="container">
             <div className="row">
@@ -80,7 +90,12 @@ function About(props) {
                 </div>
                 <div className="col mt-4">
                     <Media list>
-                        {partners}
+                        {console.log(props)}
+                        <PartnerList
+                            partners={props.partners.partners}
+                            isLoading={props.partners.isLoading}
+                            errMess={props.partners.errMess}
+                        />
                     </Media>
                 </div>
             </div>
